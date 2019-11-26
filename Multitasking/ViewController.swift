@@ -67,7 +67,25 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
     }
     
     @objc func deleteWebView() {
-        
+        if let webView = activeWebView {
+            if let index = stackView.arrangedSubviews.firstIndex(of: webView) {
+                webView.removeFromSuperview()
+                
+                if stackView.arrangedSubviews.count == 0 {
+                    setDefaultTitle()
+                } else {
+                    var currentIndex = Int(index)
+                    
+                    if currentIndex == stackView.arrangedSubviews.count {
+                        currentIndex = stackView.arrangedSubviews.count - 1
+                    }
+                    
+                    if let newSelectedWebView = stackView.arrangedSubviews[currentIndex] as? WKWebView {
+                        selectWebView(newSelectedWebView)
+                    }
+                }
+            }
+        }
     }
     
     func setDefaultTitle() {
